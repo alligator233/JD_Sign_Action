@@ -76,10 +76,12 @@ function sendNotificationIfNeed() {
 
   // 去除末尾的换行
   let SCKEY = push_key.replace(/[\r\n]/g,"")
+  let url = encodeURI('https://qmsg.zendee.cn:443/send/${SCKEY}?msg='+desp)
   const options ={
-    uri:  `https://sc.ftqq.com/${SCKEY}.send`,
-    form: { text, desp },
-    json: true,
+    uri: url,
+    //uri:  `https://sc.ftqq.com/${SCKEY}.send`,
+    //form: { text, desp },
+    //json: true,
     method: 'POST'
   }
 
