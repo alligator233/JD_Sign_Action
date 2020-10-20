@@ -76,9 +76,9 @@ function sendNotificationIfNeed() {
 
   // 去除末尾的换行
   let SCKEY = push_key.replace(/[\r\n]/g,"")
-
+  let url = encodeURI(`https://api.day.app/${SCKEY}/`+text+`/`+desp)
   const options ={
-    uri:  `https://api.day.app/${SCKEY}/`+text+`/`+desp,
+    uri:  url,
     //uri:  `https://sc.ftqq.com/${SCKEY}.send`,
     //form: { text, desp },
     //json: true,
