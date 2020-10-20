@@ -78,9 +78,10 @@ function sendNotificationIfNeed() {
   let SCKEY = push_key.replace(/[\r\n]/g,"")
 
   const options ={
-    uri:  `https://sc.ftqq.com/${SCKEY}.send`,
-    form: { text, desp },
-    json: true,
+    uri:  `https://api.day.app/${SCKEY}/`+text+`/`+desp,
+    //uri:  `https://sc.ftqq.com/${SCKEY}.send`,
+    //form: { text, desp },
+    //json: true,
     method: 'POST'
   }
 
