@@ -16,7 +16,7 @@ const dual_cookie = process.env.JD_DUAL_COOKIE
 // Server酱SCKEY
 const push_key = process.env.PUSH_KEY
 //邮箱stmp_url
-let stmp_url = process.env.STMP_URL; 
+const stmp_url = process.env.STMP_URL; 
 
 // 京东脚本文件
 const js_url = 'https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js'
@@ -86,6 +86,19 @@ function sendNotificationIfNeed() {
     json: true,
     method: 'POST'
   }
+  
+  //邮件代码开始
+  let transporter = nodemailer.createTransport(stmp_url);
+
+   // send mail with defined transport object
+  let info = await transporter.sendMail({
+    from: 'candy_22771@qq.com', // sender address
+    to: "candy_22771@qq.com", // list of receivers
+    subject: text, // Subject line
+    text: desp, // plain text body
+  });
+  //邮件代码结束
+  console.log("邮件发送结束")
 
   rp.post(options).then(res=>{
     const code = res['errno'];
@@ -119,7 +132,6 @@ function main() {
     sendNotificationIfNeed() 
   }).catch((err)=>{
     console.log('脚本文件下载失败，任务中断！');
-
     fs.writeFileSync(error_path, err, 'utf8')
   })
 
