@@ -6,8 +6,7 @@ const exec = require('child_process').execSync
 const fs = require('fs')
 const rp = require('request-promise')
 const download = require('download')
-//引入邮件模块
-const nodemailer = require("nodemailer");
+const nodemailer = require('nodemailer')
 
 // 京东Cookie
 const cookie = process.env.JD_COOKIE
