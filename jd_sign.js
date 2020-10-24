@@ -99,7 +99,8 @@ function sendNotificationIfNeed() {
     method: 'POST'
   }
   
-  sendEmail(text,desp);
+  
+  sendEmail(text,desp).catch(console.error);
 
   rp.post(options).then(res=>{
     const code = res['errno'];
