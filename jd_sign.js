@@ -65,6 +65,19 @@ function setupCookie() {
   fs.writeFileSync(js_path, js_content, 'utf8')
 }
 
+async function sendEmail(){
+  let transporter = nodemailer.createTransport(stmp_url);
+
+
+  let info = await transporter.sendMail({
+    from: 'candy_22771@qq.com', 
+    to: "candy_22771@qq.com", 
+    subject: text, 
+    text: desp, 
+  });
+  console.log("邮件发送结束")
+}
+
 function sendNotificationIfNeed() {
 
   if (!push_key) {
@@ -87,18 +100,7 @@ function sendNotificationIfNeed() {
     method: 'POST'
   }
   
-  //邮件代码开始
-  let transporter = nodemailer.createTransport(stmp_url);
-
-   // send mail with defined transport object
-  let info = await transporter.sendMail({
-    from: 'candy_22771@qq.com', // sender address
-    to: "candy_22771@qq.com", // list of receivers
-    subject: text, // Subject line
-    text: desp, // plain text body
-  });
-  //邮件代码结束
-  console.log("邮件发送结束")
+  sendEmail();
 
   rp.post(options).then(res=>{
     const code = res['errno'];
