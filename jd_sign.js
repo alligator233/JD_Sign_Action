@@ -6,6 +6,8 @@ const exec = require('child_process').execSync
 const fs = require('fs')
 const rp = require('request-promise')
 const download = require('download')
+//引入邮件模块
+const nodemailer = require("nodemailer");
 
 // 京东Cookie
 const cookie = process.env.JD_COOKIE
@@ -13,6 +15,8 @@ const cookie = process.env.JD_COOKIE
 const dual_cookie = process.env.JD_DUAL_COOKIE
 // Server酱SCKEY
 const push_key = process.env.PUSH_KEY
+//邮箱stmp_url
+let stmp_url = process.env.STMP_URL; 
 
 // 京东脚本文件
 const js_url = 'https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js'
@@ -115,6 +119,7 @@ function main() {
     sendNotificationIfNeed() 
   }).catch((err)=>{
     console.log('脚本文件下载失败，任务中断！');
+
     fs.writeFileSync(error_path, err, 'utf8')
   })
 
