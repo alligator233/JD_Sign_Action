@@ -76,10 +76,14 @@ function sendNotificationIfNeed() {
 
   // 去除末尾的换行
   let SCKEY = push_key.replace(/[\r\n]/g,"")
+  let url = `https://qmsg.zendee.cn:443/send/d55e901ec26c8be38f1bf1f4f74032df`
+  let msg = `推送测试`
   const options ={
-    uri:  `https://sc.ftqq.com/${SCKEY}.send`,
-    form: { text, desp },
-    json: true,
+    uri : url,
+    form: { msg },
+    //uri:  `https://sc.ftqq.com/${SCKEY}.send`,
+    //form: { text, desp },
+    //json: true,
     method: 'POST'
   }
 
