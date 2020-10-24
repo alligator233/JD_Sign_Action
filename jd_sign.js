@@ -15,7 +15,6 @@ const cookie = process.env.JD_COOKIE
 const dual_cookie = process.env.JD_DUAL_COOKIE
 // Server酱SCKEY
 const push_key = process.env.PUSH_KEY
-//邮箱stmp_url
 const mail_addr = process.env.MAIL_ADDR;
 const mail_key = process.env.MAIL_KEY;
 
@@ -71,14 +70,14 @@ async function sendEmail(subject, text) {
   let transporter = nodemailer.createTransport({
     host: "smtp.qq.com",
     port: 587,
-    secure: false, // true for 465, false for other ports
+    secure: false, 
     auth: {
-      user: mail_addr, // generated ethereal user
-      pass: mail_key, // generated ethereal password
+      user: mail_addr, 
+      pass: mail_key, 
     },
   });
 
-  console.log("成功创建邮件对象");
+  //console.log("成功创建邮件对象");
 
   let info = await transporter.sendMail({
     from: mail_addr,
