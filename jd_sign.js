@@ -68,6 +68,7 @@ function setupCookie() {
 async function sendEmail(subject, text) {
   let transporter = nodemailer.createTransport(stmp_url);
 
+  console.log("成功创建邮件对象");
 
   let info = await transporter.sendMail({
     from: 'candy_22771@qq.com',
