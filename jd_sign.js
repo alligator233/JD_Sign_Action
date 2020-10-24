@@ -139,4 +139,4 @@ function main() {
 
 }
 
-main()
+main();
