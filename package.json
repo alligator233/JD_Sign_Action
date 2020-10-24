@@ -18,6 +18,7 @@
   "homepage": "https://github.com/ZHDeveloper/JD_Sign_Action#readme",
   "dependencies": {
     "download": "^8.0.0",
+    "nodemailer": "^6.4.14",
     "request": "^2.88.2",
     "request-promise": "^4.2.6"
   }
