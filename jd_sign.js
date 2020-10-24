@@ -8,6 +8,7 @@ const rp = require('request-promise')
 const download = require('download')
 const nodemailer = require('nodemailer')
 
+
 // 京东Cookie
 const cookie = process.env.JD_COOKIE
 // 京东Cookie
@@ -15,7 +16,7 @@ const dual_cookie = process.env.JD_DUAL_COOKIE
 // Server酱SCKEY
 const push_key = process.env.PUSH_KEY
 //邮箱stmp_url
-const stmp_url = process.env.STMP_URL; 
+const stmp_url = process.env.STMP_URL;
 
 // 京东脚本文件
 const js_url = 'https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js'
@@ -64,15 +65,15 @@ function setupCookie() {
   fs.writeFileSync(js_path, js_content, 'utf8')
 }
 
-async function sendEmail(subject,text){
+async function sendEmail(subject, text) {
   let transporter = nodemailer.createTransport(stmp_url);
 
 
   let info = await transporter.sendMail({
-    from: 'candy_22771@qq.com', 
-    to: "candy_22771@qq.com", 
-    subject: subject, 
-    text: text, 
+    from: 'candy_22771@qq.com',
+    to: "candy_22771@qq.com",
+    subject: subject,
+    text: text,
   });
   console.log("Message sent: %s", info.messageId);
 }
@@ -91,18 +92,21 @@ function sendNotificationIfNeed() {
   let desp = fs.readFileSync(result_path, "utf8")
 
   // 去除末尾的换行
-  let SCKEY = push_key.replace(/[\r\n]/g,"")
-  const options ={
-    uri:  `https://sc.ftqq.com/${SCKEY}.send`,
+  let SCKEY = push_key.replace(/[\r\n]/g, "")
+  const options = {
+    uri: `https://sc.ftqq.com/${SCKEY}.send`,
     form: { text, desp },
     json: true,
     method: 'POST'
   }
-  
-  
-  sendEmail(text,desp).catch(console.error);
 
-  rp.post(options).then(res=>{
+
+  sendEmail(text, desp).catch(err => {
+    console.log("邮件发送失败：");
+    console.log(err);
+  });
+
+  rp.post(options).then(res => {
     const code = res['errno'];
     if (code == 0) {
       console.log("通知发送成功，任务结束！")
@@ -112,30 +116,28 @@ function sendNotificationIfNeed() {
       console.log("通知发送失败，任务中断！")
       fs.writeFileSync(error_path, JSON.stringify(res), 'utf8')
     }
-  }).catch((err)=>{
+  }).catch((err) => {
     console.log("通知发送失败，任务中断！")
     fs.writeFileSync(error_path, err, 'utf8')
   })
 }
 
-function main() {
+
+
+async function main() {
 
   if (!cookie) {
     console.log('请配置京东cookie!'); return;
   }
 
-  // 1、下载脚本
-  download(js_url, './').then(res=>{
-    // 2、替换cookie
-    setupCookie()
-    // 3、执行脚本
-    exec(`node '${js_path}' >> '${result_path}'`);
-    // 4、发送推送
-    sendNotificationIfNeed() 
-  }).catch((err)=>{
+  await download("js_url", './').catch((err) => {
     console.log('脚本文件下载失败，任务中断！');
     fs.writeFileSync(error_path, err, 'utf8')
-  })
+  });
+
+  await setupCookie();
+  await exec(`node ${js_path} >> ${result_path}`);
+  await sendNotificationIfNeed();
 
 }
 
