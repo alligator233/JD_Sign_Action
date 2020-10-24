@@ -66,7 +66,16 @@ function setupCookie() {
 }
 
 async function sendEmail(subject, text) {
-  let transporter = nodemailer.createTransport(stmp_url);
+
+  let transporter = nodemailer.createTransport({
+    host: "smtp.qq.com",
+    port: 587,
+    secure: false, // true for 465, false for other ports
+    auth: {
+      user: "candy_22771@qq.com", // generated ethereal user
+      pass: "tnyrjzfghewcbbfh", // generated ethereal password
+    },
+  });
 
   console.log("成功创建邮件对象");
 
