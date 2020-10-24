@@ -64,17 +64,17 @@ function setupCookie() {
   fs.writeFileSync(js_path, js_content, 'utf8')
 }
 
-async function sendEmail(){
+async function sendEmail(subject,text){
   let transporter = nodemailer.createTransport(stmp_url);
 
 
   let info = await transporter.sendMail({
     from: 'candy_22771@qq.com', 
     to: "candy_22771@qq.com", 
-    subject: text, 
-    text: desp, 
+    subject: subject, 
+    text: text, 
   });
-  console.log("邮件发送结束")
+  console.log("Message sent: %s", info.messageId);
 }
 
 function sendNotificationIfNeed() {
@@ -99,7 +99,7 @@ function sendNotificationIfNeed() {
     method: 'POST'
   }
   
-  sendEmail();
+  sendEmail(text,desp);
 
   rp.post(options).then(res=>{
     const code = res['errno'];
