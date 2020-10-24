@@ -130,7 +130,7 @@ async function main() {
     console.log('请配置京东cookie!'); return;
   }
 
-  await download("js_url", './').catch((err) => {
+  await download(js_url, './').catch((err) => {
     console.log('脚本文件下载失败，任务中断！');
     fs.writeFileSync(error_path, err, 'utf8')
   });
