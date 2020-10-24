@@ -16,7 +16,8 @@ const dual_cookie = process.env.JD_DUAL_COOKIE
 // Server酱SCKEY
 const push_key = process.env.PUSH_KEY
 //邮箱stmp_url
-const stmp_url = process.env.STMP_URL;
+const mail_addr = process.env.MAIL_ADDR;
+const mail_key = process.env.MAIL_KEY;
 
 // 京东脚本文件
 const js_url = 'https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js'
@@ -72,16 +73,16 @@ async function sendEmail(subject, text) {
     port: 587,
     secure: false, // true for 465, false for other ports
     auth: {
-      user: "candy_22771@qq.com", // generated ethereal user
-      pass: "tnyrjzfghewcbbfh", // generated ethereal password
+      user: mail_addr, // generated ethereal user
+      pass: mail_key, // generated ethereal password
     },
   });
 
   console.log("成功创建邮件对象");
 
   let info = await transporter.sendMail({
-    from: 'candy_22771@qq.com',
-    to: "candy_22771@qq.com",
+    from: mail_addr,
+    to: mail_addr,
     subject: subject,
     text: text,
   });
@@ -119,15 +120,15 @@ function sendNotificationIfNeed() {
   rp.post(options).then(res => {
     const code = res['errno'];
     if (code == 0) {
-      console.log("通知发送成功，任务结束！")
+      console.log("server酱通知发送成功，任务结束！")
     }
     else {
       console.log(res);
-      console.log("通知发送失败，任务中断！")
+      console.log("server酱通知发送失败，任务中断！")
       fs.writeFileSync(error_path, JSON.stringify(res), 'utf8')
     }
   }).catch((err) => {
-    console.log("通知发送失败，任务中断！")
+    console.log("server酱通知发送失败，任务中断！")
     fs.writeFileSync(error_path, err, 'utf8')
   })
 }
