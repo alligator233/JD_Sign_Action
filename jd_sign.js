@@ -90,8 +90,8 @@ async function sendEmail(subject, text) {
 
 function sendNotificationIfNeed() {
 
-  if (!push_key) {
-    console.log('执行任务结束!'); return;
+  if (!mail_addr || !mail_key) {
+    console.log('缺少推送key，任务结束！'); return;
   }
 
   if (!fs.existsSync(result_path)) {
