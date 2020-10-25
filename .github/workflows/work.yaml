@@ -15,7 +15,6 @@ on:
 env:
   JD_COOKIE: ${{ secrets.JD_COOKIE }}
   JD_DUAL_COOKIE: ${{ secrets.JD_DUAL_COOKIE }}
-  PUSH_KEY: ${{ secrets.PUSH_KEY }}
   MAIL_ADDR: ${{ secrets.MAIL_ADDR }}
   MAIL_KEY: ${{ secrets.MAIL_KEY }}
   UPLOAD_BESULT_DIR: true

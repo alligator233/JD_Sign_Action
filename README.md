@@ -1,5 +1,7 @@
-> 基于自己使用修改过代码，使用请注意！
-# 基于github action的京东自动化签到
+> 基于自己使用修改过代码，使用请注意！！！
+> 由server酱推送改为邮箱推送
+> 需要填入MAIL_ADDR和MAIL_KEY，基于SMTP服务（不需要PUSH_KEY了）
+# 基于github action的京东自动化签到-邮箱推送
 
 ## 介绍
 
