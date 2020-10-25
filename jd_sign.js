@@ -4,7 +4,7 @@
 
 const exec = require('child_process').execSync
 const fs = require('fs')
-const rp = require('request-promise')
+// const rp = require('request-promise')
 const download = require('download')
 const nodemailer = require('nodemailer')
 
@@ -14,7 +14,7 @@ const cookie = process.env.JD_COOKIE
 // 京东Cookie
 const dual_cookie = process.env.JD_DUAL_COOKIE
 // Server酱SCKEY
-const push_key = process.env.PUSH_KEY
+// const push_key = process.env.PUSH_KEY
 const mail_addr = process.env.MAIL_ADDR;
 const mail_key = process.env.MAIL_KEY;
 
@@ -102,34 +102,36 @@ function sendNotificationIfNeed() {
   let desp = fs.readFileSync(result_path, "utf8")
 
   // 去除末尾的换行
-  let SCKEY = push_key.replace(/[\r\n]/g, "")
-  const options = {
-    uri: `https://sc.ftqq.com/${SCKEY}.send`,
-    form: { text, desp },
-    json: true,
-    method: 'POST'
-  }
+  // let SCKEY = push_key.replace(/[\r\n]/g, "")
+  // const options = {
+  //   uri: `https://sc.ftqq.com/${SCKEY}.send`,
+  //   form: { text, desp },
+  //   json: true,
+  //   method: 'POST'
+  // }
 
 
-  sendEmail(text, desp).catch(err => {
+  sendEmail(text, desp)
+    .then(() => {console.log("邮件发送成功！")})
+    .catch(err => {
     console.log("邮件发送失败：");
     console.log(err);
   });
 
-  rp.post(options).then(res => {
-    const code = res['errno'];
-    if (code == 0) {
-      console.log("server酱通知发送成功，任务结束！")
-    }
-    else {
-      console.log(res);
-      console.log("server酱通知发送失败，任务中断！")
-      fs.writeFileSync(error_path, JSON.stringify(res), 'utf8')
-    }
-  }).catch((err) => {
-    console.log("server酱通知发送失败，任务中断！")
-    fs.writeFileSync(error_path, err, 'utf8')
-  })
+  // rp.post(options).then(res => {
+  //   const code = res['errno'];
+  //   if (code == 0) {
+  //     console.log("server酱通知发送成功，任务结束！")
+  //   }
+  //   else {
+  //     console.log(res);
+  //     console.log("server酱通知发送失败，任务中断！")
+  //     fs.writeFileSync(error_path, JSON.stringify(res), 'utf8')
+  //   }
+  // }).catch((err) => {
+  //   console.log("server酱通知发送失败，任务中断！")
+  //   fs.writeFileSync(error_path, err, 'utf8')
+  // })
 }
 
 
