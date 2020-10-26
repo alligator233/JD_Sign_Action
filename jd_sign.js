@@ -92,7 +92,7 @@ async function sendEmail(subject, text) {
   console.log("成功创建邮件对象");
 
   let info_1 = await transporter_1.sendMail({
-    from: mail_addr,
+    from: mail_addr_1,
     to: mail_addr_1,
     subject: subject,
     text: text,
@@ -101,7 +101,7 @@ async function sendEmail(subject, text) {
   let str = text.search("【签到号二】").substring(index,txt.length);
 
   let info_2 = await transporter_2.sendMail({
-    from: mail_addr,
+    from: mail_addr_2,
     to: mail_addr_2,
     subject: subject,
     text: str,
@@ -112,7 +112,7 @@ async function sendEmail(subject, text) {
 
 function sendNotificationIfNeed() {
 
-  if (!mail_addr || !mail_key) {
+  if (mail_addr_1 && mail_key_1 && mail_addr_2 && mail_key_2) {
     console.log('缺少推送key，任务结束！'); return;
   }
 
