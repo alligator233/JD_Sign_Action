@@ -112,7 +112,7 @@ async function sendEmail(subject, text) {
 
 function sendNotificationIfNeed() {
 
-  if (mail_addr_1 && mail_key_1 && mail_addr_2 && mail_key_2) {
+  if (!mail_addr_2 && !mail_key_2) {
     console.log('缺少推送key，任务结束！'); return;
   }
 
