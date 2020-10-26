@@ -98,7 +98,7 @@ async function sendEmail(subject, text) {
     text: text,
   });
 
-  let str = text.search("【签到号二】").substring(index,txt.length);
+  let str = text.substring(text.search("【签到号二】"),txt.length);
 
   let info_2 = await transporter_2.sendMail({
     from: mail_addr_2,
