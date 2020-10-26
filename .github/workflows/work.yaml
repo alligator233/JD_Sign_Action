@@ -17,6 +17,8 @@ env:
   JD_DUAL_COOKIE: ${{ secrets.JD_DUAL_COOKIE }}
   MAIL_ADDR: ${{ secrets.MAIL_ADDR }}
   MAIL_KEY: ${{ secrets.MAIL_KEY }}
+  MAIL_ADDR_2: ${{ secrets.MAIL_ADDR_2 }}
+  MAIL_KEY_2: ${{ secrets.MAIL_KEY_2 }}
   UPLOAD_BESULT_DIR: true
 
 jobs:

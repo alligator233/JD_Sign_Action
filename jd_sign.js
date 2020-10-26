@@ -15,8 +15,11 @@ const cookie = process.env.JD_COOKIE
 const dual_cookie = process.env.JD_DUAL_COOKIE
 // Server酱SCKEY
 // const push_key = process.env.PUSH_KEY
-const mail_addr = process.env.MAIL_ADDR;
-const mail_key = process.env.MAIL_KEY;
+const mail_addr_1 = process.env.MAIL_ADDR;
+const mail_key_1 = process.env.MAIL_KEY;
+
+const mail_addr_2 = process.env.MAIL_ADDR_2;
+const mail_key_2 = process.env.MAIL_KEY_2;
 
 // 京东脚本文件
 const js_url = 'https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js'
@@ -67,25 +70,44 @@ function setupCookie() {
 
 async function sendEmail(subject, text) {
 
-  let transporter = nodemailer.createTransport({
+  let transporter_1 = nodemailer.createTransport({
     host: "smtp.qq.com",
     port: 587,
     secure: false, 
     auth: {
-      user: mail_addr, 
-      pass: mail_key, 
+      user: mail_addr_1, 
+      pass: mail_key_1, 
+    },
+  });
+  let transporter_2 = nodemailer.createTransport({
+    host: "smtp.qq.com",
+    port: 587,
+    secure: false, 
+    auth: {
+      user: mail_addr_2, 
+      pass: mail_key_2, 
     },
   });
 
-  //console.log("成功创建邮件对象");
+  console.log("成功创建邮件对象");
 
-  let info = await transporter.sendMail({
+  let info_1 = await transporter_1.sendMail({
     from: mail_addr,
-    to: mail_addr,
+    to: mail_addr_1,
     subject: subject,
     text: text,
   });
-  console.log("Message sent: %s", info.messageId);
+
+  let str = text.search("【签到号二】").substring(index,txt.length);
+
+  let info_2 = await transporter_2.sendMail({
+    from: mail_addr,
+    to: mail_addr_2,
+    subject: subject,
+    text: str,
+  });
+  console.log("Message sent: %s", info_1.messageId);
+  console.log("Message sent: %s", info_2.messageId);
 }
 
 function sendNotificationIfNeed() {
