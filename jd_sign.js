@@ -70,13 +70,21 @@ async function sendEmail(subject, text) {
   let transporter = nodemailer.createTransport({
     host: "smtp.qq.com",
     port: 587,
-    secure: false, 
+    secure: false,
     auth: {
-      user: mail_addr, 
-      pass: mail_key, 
+      user: mail_addr,
+      pass: mail_key,
     },
   });
-  console.log("成功创建邮件对象");
+
+  // verify connection configuration
+  transporter.verify(function (error, success) {
+    if (error) {
+      console.log("Server verify failed:"+error);
+    } else {
+      console.log("Server is ready:");
+    }
+  });
 
   let info = await transporter.sendMail({
     from: mail_addr,
@@ -112,11 +120,11 @@ function sendNotificationIfNeed() {
 
 
   sendEmail(text, desp)
-    .then(() => {console.log("邮件发送成功！")})
+    .then(() => { console.log("邮件发送成功！") })
     .catch(err => {
-    console.log("邮件发送失败：");
-    console.log(err);
-  });
+      console.log("邮件发送失败：");
+      console.log(err);
+    });
 
   // rp.post(options).then(res => {
   //   const code = res['errno'];
